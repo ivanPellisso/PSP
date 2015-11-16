@@ -84,7 +84,10 @@ public class Arbol {
                                 dinos.get(0).restaVida(5);
                             }else{
                                 if(dinos.get(0).getAta()>saurio.getAta()&&((dinos.get(0).getDef()*0.6)>saurio.getDef())){
-                                    saurio.restaVida(2);
+                                    saurio.restaVida(3);
+                                }else{
+                                    dinos.get(0).restaVida(2);
+                                    saurio.restaVida();
                                 }
                             }
                         }
