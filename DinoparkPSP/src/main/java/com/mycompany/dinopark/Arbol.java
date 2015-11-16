@@ -64,6 +64,7 @@ public class Arbol {
                     tiempoPasado=true;
                     entraArbol.await();
                     if(tiempoPasado){
+                        entrado=true;
                         if(!luchando){
                             for(Dinosaurio dino: dinos){
                                 if(dino.getTipo().equalsIgnoreCase("Herbívoro")){
@@ -77,6 +78,7 @@ public class Arbol {
                     }
                 }else{
                     if(dinos.size()>0){
+                        entrado=true;
                         luchando=true;
                         TimeUnit.SECONDS.sleep(4);
                         if(dinos.get(0).getTipo().equalsIgnoreCase(saurio.getTipo())){
