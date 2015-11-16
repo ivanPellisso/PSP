@@ -32,7 +32,7 @@ public class Habitat implements Runnable{
         estadio=new VicenteCalderon();
         rest=new Restaurante();
         picadero=new Folladero(this);
-        forest=new Bosque();
+        forest=new Bosque(this);
     }
     
     public Habitat(ArrayList<Dinosaurio> dinosVivos,ArrayList<Dinosaurio> dinosMuertos,ExecutorService exe){
@@ -148,6 +148,9 @@ public class Habitat implements Runnable{
         picadero.entrar(d);
     }
     
+    public void entrarBosque(Dinosaurio d) {
+        forest.entrar(d);
+    }
     
 
     @Override
@@ -179,5 +182,7 @@ public class Habitat implements Runnable{
         
         exe.shutdown();
     }
+
+    
 
 }
