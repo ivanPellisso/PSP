@@ -21,14 +21,14 @@ import java.util.logging.Logger;
 public class Arbol {
     private List<Dinosaurio> dinos;
     private Lock bloquea;
-    private Condition levanta;
+    private Condition entraArbol;
     private Habitat hab;
 
     public Arbol(Habitat habi){
         hab=habi;
         dinos=new ArrayList();
         bloquea=new ReentrantLock();
-        levanta=bloquea.newCondition();
+        entraArbol=bloquea.newCondition();
     }
     
     public Lock getBlock() {
@@ -40,11 +40,11 @@ public class Arbol {
     }
 
     public Condition getLevanta() {
-        return levanta;
+        return entraArbol;
     }
 
     public void setLevanta(Condition levanta) {
-        this.levanta = levanta;
+        this.entraArbol = levanta;
     }
 
     public Habitat getHab() {
@@ -55,15 +55,44 @@ public class Arbol {
         this.hab = hab;
     }
     
-    public boolean entrar(){
-        boolean entrado=false;
+    public boolean entrar(Dinosaurio saurio){
+        boolean entrado=false, tiempoPasado=false, luchando=false;
         try {
             if(bloquea.tryLock(1000, TimeUnit.MILLISECONDS)){
-                if(dinos.size()>0){
+                if(dinos.size()<=0){
                     TimeUnit.MILLISECONDS.sleep(2000);
-                    levanta.await();
-                    
+                    tiempoPasado=true;
+                    entraArbol.await();
+                    if(tiempoPasado){
+                        if(!luchando){
+                            for(Dinosaurio dino: dinos){
+                                if(dino.getTipo().equalsIgnoreCase("Herbívoro")){
+                                    dino.restaHambre();
+                                    dino.aumentaAlegria();
+                                }else{
+                                    entraArbol.notifyAll();
+                                }
+                            }
+                        }
+                    }
+                }else{
+                    if(dinos.size()>0){
+                        luchando=true;
+                        TimeUnit.SECONDS.sleep(4);
+                        if(dinos.get(0).getTipo().equalsIgnoreCase(saurio.getTipo())){
+                            if(dinos.get(0).getDef()<(saurio.getAta()*0.7)&&((dinos.get(0).getDef()*0.9)<(saurio.getDef()))){
+                                dinos.get(0).restaVida(5);
+                            }else{
+                                if(dinos.get(0).getAta()>saurio.getAta()&&((dinos.get(0).getDef()*0.6)>saurio.getDef())){
+                                    saurio.restaVida(2);
+                                }
+                            }
+                        }
+                        dinos.clear();
+                        entraArbol.signalAll();
+                    }
                 }
+                bloquea.unlock();
             }
         } catch (InterruptedException ex) {
             Logger.getLogger(Arbol.class.getName()).log(Level.SEVERE, null, ex);
