@@ -71,7 +71,7 @@ public class Arbol {
                                     dino.restaHambre();
                                     dino.aumentaAlegria();
                                 }else{
-                                    entraArbol.notifyAll();
+                                    entraArbol.notify();
                                 }
                             }
                         }
