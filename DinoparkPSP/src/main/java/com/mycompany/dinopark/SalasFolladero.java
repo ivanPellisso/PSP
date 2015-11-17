@@ -44,13 +44,6 @@ public class SalasFolladero {
             @Override
             public void run() {
                 try {
-                     /**
-                      *     TimeUnit milliseconds 5000
-                      *     for recorre dinos. Dentro cambia lugar actual a habitat y aumenta alegria
-                      *     DespuÃ©s del bucle, dinos.clear();
-                      *     barrier.reset();
-                      *     En catch, barrier.reset();
-                      */
                     int probHuevo=(int)(Math.random()*100)+30;
                     TimeUnit.MILLISECONDS.sleep(10000);
                     synchronized(dinos){
@@ -62,11 +55,10 @@ public class SalasFolladero {
                             hab.addDino(new Dinosaurio(dinos.get(0).getNombre(),dinos.get(1).getNombre(), hab));
                         }
                     }
-                        dinos.clear();
-                        barrier.reset();
-                } catch (InterruptedException ex) {
                     barrier.reset();
-                    //Logger.getLogger(VicenteCalderon.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InterruptedException ex) {
+                    dinos.clear();
+                    barrier.reset();
                 }
             }
         });
@@ -94,8 +86,9 @@ public class SalasFolladero {
         }
         if(entrado){
             try {
-                barrier.await();//aquÃ­ se esperan
+                barrier.await();
             } catch (InterruptedException ex) {
+                dinos.clear();
                 barrier.reset();
             } catch (BrokenBarrierException ex){
                 
@@ -118,7 +111,7 @@ public class SalasFolladero {
     }
     
     public void resetSala(){
-        barrier.reset();
         dinos.clear();
+        barrier.reset();
     }
 }
