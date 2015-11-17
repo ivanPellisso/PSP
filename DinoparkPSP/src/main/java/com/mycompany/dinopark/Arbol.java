@@ -80,7 +80,7 @@ public class Arbol {
                         }
                     }
                 } else {
-                    if (dinos.size() > 0) {
+                    if (dinos.size() ==1) {
                         entrado = true;
                         dinos.add(saurio);
                         luchando = true;
@@ -96,7 +96,6 @@ public class Arbol {
                 }
                 bloquea.unlock();
             }
-            
         } catch (InterruptedException ex) {
             
         }
@@ -116,16 +115,4 @@ public class Arbol {
        return "Arbol "+num+", dinos\n"+dinosEnArbol();
     }
 
-    /**
-     * Árboles equivalente a salas en el picadero. Hacer con Lock y Condition.
-     * En función entrar(): if( ___.trylock()){ if(!hayAlguien){ se mete en el
-     * árbol n segundos(Condition.await) if (pasado el tiempo){ if(luchando){ if
-     * (herbívoro){ baja hambre y sube alegría }else{ me han levantado con
-     * notify } } } }else{ if(hayAlguien){ (segun el tipo) LUCHAR --->
-     * TimeUnit.wait clear dinos signalAll } } UNLOCK
-     */
-    /**
-     * Luchar: - Carnívoro come a herbívoro o Dar golpe de tanto y le quite vida
-     * de tanto - Herbívoro más defensa y carnívoro más ataque
-     */
 }

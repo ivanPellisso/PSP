@@ -28,23 +28,16 @@ public class VicenteCalderon{
             @Override
             public void run() {
                 try {
-                     /**
-                      *     TimeUnit milliseconds 5000
-                      *     for recorre dinos. Dentro cambia lugar actual a habitat y aumenta alegria
-                      *     Después del bucle, dinos.clear();
-                      *     barrier.reset();
-                      *     En catch, barrier.reset(); (¿?)
-                      */
                     TimeUnit.MILLISECONDS.sleep(5000);
                     synchronized(dinos){
                         for(Dinosaurio dino: dinos){
                             dino.setLugarActual(Lugares.HABITAT);
                             dino.aumentaAlegria(3);
                         }
-                        dinos.clear();
                         barrier.reset();
                     }
                 } catch (InterruptedException ex) {
+                    dinos.clear();
                     barrier.reset();
                 }
             }
@@ -70,10 +63,10 @@ public class VicenteCalderon{
         }
         if(entra){
             try {
-                barrier.await();//aquí se esperan
+                barrier.await();
             } catch (InterruptedException ex) {
-                barrier.reset();
                 dinos.clear();
+                barrier.reset();
             } catch (BrokenBarrierException ex) {
                 
             }

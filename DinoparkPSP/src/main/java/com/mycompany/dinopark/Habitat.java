@@ -132,6 +132,10 @@ public class Habitat implements Runnable{
         forest.resetBosque();
         meteoLanzado=true;
     }
+
+    public Bosque getForest() {
+        return forest;
+    }
     
     public void bigBang(){
         bang=new Thread(this);
@@ -140,9 +144,6 @@ public class Habitat implements Runnable{
             dinosVivos.add(new Dinosaurio(i+"",this));
             exe.execute(dinosVivos.get(i));
         }
-        /*
-            for que recorra num de dinos que se crean al iniciar y los añada al arrayList de dinos. Despúes, execute dinos.get(i)
-        */
     }
     
     public void entrarEstadio(Dinosaurio d){
@@ -187,10 +188,10 @@ public class Habitat implements Runnable{
         estadio.resetStadium();
         rest.cerrarRestaurante();
         forest.resetBosque();
+        picadero.resetPicadero();
         for(Dinosaurio dino: dinosVivos){
             dino.muereDino();
         }
-        //dinos=null;
         exe.shutdown();
     }
 

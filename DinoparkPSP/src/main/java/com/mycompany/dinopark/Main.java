@@ -5,6 +5,7 @@
  */
 package com.mycompany.dinopark;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -19,10 +20,22 @@ public class Main {
     public static void main(String[] args) {
         Scanner lector=new Scanner(System.in);
         Habitat hab=new Habitat();
-        int opcion;
+        int opcion=0;
+        boolean esNum=false;
         do{
-            System.out.println("Introduce opción:\n\t1. Big Bang\n\t2. Lista dinosaurios vivos\n\t3. Lista dinosaurios muertos\n\t4. Listado en estadio\n\t5. Dinos en Picadero\n\t6. Lanzar meteorito");
-            opcion=lector.nextInt();
+            
+            do{
+                try{
+                    System.out.println("Introduce opción:\n\t1. Big Bang\n\t2. Lista dinosaurios vivos\n\t3. Lista dinosaurios muertos\n"
+                    + "\t4. Listado en estadio\n\t5. Dinos en Picadero\n\t6. Dinos en Bosque\n\t7. Lanzar meteorito");
+                    esNum=true;
+                    opcion=lector.nextInt();
+                }catch(InputMismatchException  ex){
+                    System.out.println("Debes introducir un número entero.");
+                    esNum=false;
+                    lector.nextLine();
+                }
+            }while(!esNum);
             switch(opcion){
                 case 1:
                     hab.bigBang();
@@ -41,12 +54,17 @@ public class Main {
                         System.out.println(hab.getPicadero().getSalas().get(i).toString());
                     }
                     break;
-                case 6: 
+                case 6:
+                    for(int i=0;i<5;i++){
+                        System.out.println(hab.getForest().getArboles().get(i).toString());
+                    }
+                    break;
+                case 7: 
                     hab.lanzaMeteorito();
                     System.out.println("Sa matao Paco");
                     break;
             }
-        }while(opcion!=6);
+        }while(opcion!=7);
     }
     
 }
