@@ -58,6 +58,18 @@ public class Dinosaurio implements Runnable{
         String [] sexos={"Masculino","Femenino"};
         sexo=sexos[(int)(Math.random()*2)];
         this.nombre=n1.concat(" - ").concat(n2);
+        String [] tipos={"Herbívoro","Carnívoro"};
+        tipo=tipos[(int)(Math.random()*2)];
+        if(tipo.equalsIgnoreCase("herbívoro")){
+            ata=(int)(Math.random()*30)+20;
+            def=(int)(Math.random()*35)+35;
+        }else{
+            ata=(int)(Math.random()*40)+30;
+            def=(int)(Math.random()*25)+25;
+        }
+        d=new Thread(this);
+        d.start();
+        d.setName("Dino"+n1+" - "+n2);
     }
 
     public int getVida() {
@@ -193,8 +205,8 @@ public class Dinosaurio implements Runnable{
     }
     
     public void muereDino(){
-        vida=0;
         d.interrupt();
+        vida=0;
     }
     
     public String getNombre() {
@@ -233,7 +245,7 @@ public class Dinosaurio implements Runnable{
             lugar=Lugares.RESTAURANTE;
         }else{
             if(edad>14&&edad<40){
-                lugar=Lugares.SALA_FOLLADERO;
+                lugar=Lugares.FOLLADERO;
             }else{
                 if(probability%2!=0){
                     lugar=Lugares.VICENTE_CALDERON;

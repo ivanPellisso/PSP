@@ -119,6 +119,8 @@ public class Habitat implements Runnable{
             synchronized(dinosVivos){
                 dinosVivos.add(saurio);
             }
+        }else{
+            saurio.muereDino();
         }
     }
     

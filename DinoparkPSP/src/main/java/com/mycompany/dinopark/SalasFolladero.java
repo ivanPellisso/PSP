@@ -61,12 +61,12 @@ public class SalasFolladero {
                         if(probHuevo>60){
                             hab.addDino(new Dinosaurio(dinos.get(0).getNombre(),dinos.get(1).getNombre(), hab));
                         }
+                    }
                         dinos.clear();
                         barrier.reset();
-                    }
                 } catch (InterruptedException ex) {
                     barrier.reset();
-                    Logger.getLogger(VicenteCalderon.class.getName()).log(Level.SEVERE, null, ex);
+                    //Logger.getLogger(VicenteCalderon.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -89,8 +89,6 @@ public class SalasFolladero {
                     dinos.add(d);
                     d.setLugarActual(Lugares.SALA_FOLLADERO);
                     entrado=true;
-                }else{
-                    d.setLugarActual(Lugares.HABITAT);
                 }
             }
         }
