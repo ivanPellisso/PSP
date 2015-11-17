@@ -20,9 +20,11 @@ public class Restaurante implements Runnable{
     private Thread rest;
     
     public Restaurante(){
-        mesas=new ArrayBlockingQueue<>(10, true);
+        mesas=new ArrayBlockingQueue<>(10, true);//True para FIFO
         rest=new Thread(this);
+        rest.start();
         rest.setName("Restaurante");
+        
     }
 
     public void cerrarRestaurante(){

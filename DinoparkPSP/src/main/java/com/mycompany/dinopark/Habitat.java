@@ -33,6 +33,9 @@ public class Habitat implements Runnable{
         rest=new Restaurante();
         picadero=new Folladero(this);
         forest=new Bosque(this);
+        bang=new Thread(this);
+        bang.start();
+        bang.setName("Habitat");
     }
     
     public Habitat(ArrayList<Dinosaurio> dinosVivos,ArrayList<Dinosaurio> dinosMuertos,ExecutorService exe){

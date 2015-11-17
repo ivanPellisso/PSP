@@ -6,8 +6,6 @@
 package com.mycompany.dinopark;
 
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -23,7 +21,7 @@ public class Dinosaurio implements Runnable{
     private int ata;
     private int def;
     private int personalidad;
-    private char sexo;
+    private String sexo;
     private boolean para;
     private Habitat hab;
     private Lugares lug;
@@ -31,11 +29,11 @@ public class Dinosaurio implements Runnable{
     
     public Dinosaurio(String nombre, Habitat hab){
         this.hab=hab;
-        vida=(int)(Math.random()*25)+20;
+        vida=(int)(Math.random()*40)+30;
         hambre=0;
         alegria=0;
         edad=0;
-        char [] sexos={'M','H'};
+        String [] sexos={"Masculino","Femenino"};
         sexo=sexos[(int)(Math.random()*2)];
         String [] tipos={"Herbívoro","Carnívoro"};
         tipo=tipos[(int)(Math.random()*2)];
@@ -47,7 +45,7 @@ public class Dinosaurio implements Runnable{
             def=(int)(Math.random()*25)+25;
         }
         this.nombre=nombre;
-        d=new Thread();
+        d=new Thread(this);
         d.start();
         d.setName("Dino"+nombre);
     }
@@ -57,7 +55,7 @@ public class Dinosaurio implements Runnable{
         vida=(int)(Math.random()*25)+20;
         hambre=0;
         alegria=0;
-        char [] sexos={'M','H'};
+        String [] sexos={"Masculino","Femenino"};
         sexo=sexos[(int)(Math.random()*2)];
         this.nombre=n1.concat(" - ").concat(n2);
     }
@@ -118,11 +116,11 @@ public class Dinosaurio implements Runnable{
         this.personalidad = personalidad;
     }
 
-    public char getSexo() {
+    public String getSexo() {
         return sexo;
     }
 
-    public void setSexo(char sexo) {
+    public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 
@@ -151,15 +149,15 @@ public class Dinosaurio implements Runnable{
     }
     
     public void restaHambre(){
-        hambre-=2;
+        hambre-=5;
     }
     
     public void aumentaHambre(){
         hambre++;
-        if(hambre>30){
-            hambre=30;
+        if(hambre>40){
+            hambre=40;
         }
-        if(hambre>20*0.75){
+        if(hambre>35*0.75){
             vida--;
         }
     }
@@ -170,16 +168,16 @@ public class Dinosaurio implements Runnable{
     
     public void aumentaAlegria(){
         alegria++;
-        if(alegria==20){
-            alegria=0;
+        if(alegria>20){
+            alegria=20;
             vida++;
         }
     }
     
     public void aumentaAlegria(int n){
         alegria+=n;
-        if(alegria==20){
-            alegria=0;
+        if(alegria>20){
+            alegria=20;
             vida++;
         }
     }
@@ -218,15 +216,13 @@ public class Dinosaurio implements Runnable{
     public Lugares irLugar() {
         Lugares lugar = null;
         int probability=(int)(Math.random()*70)+10;
-        if (hambre>18){
+        if (hambre>30&&hambre<40){
             lugar=Lugares.RESTAURANTE;
-            
         }else{
-            if(edad>8&&probability<35){
+            if(edad>14&&edad<40){
                 lugar=Lugares.SALA_FOLLADERO;
-                
             }else{
-                if(alegria<20&&probability>=35){
+                if(probability%2!=0){
                     lugar=Lugares.VICENTE_CALDERON;
                 }
             }
@@ -242,7 +238,7 @@ public class Dinosaurio implements Runnable{
         while (vida > 0) {
             alegria++;
             try {
-                TimeUnit.SECONDS.sleep(2);
+                TimeUnit.SECONDS.sleep(5);
                 Lugares lugar = irLugar();
                 switch (lugar) {
                     case VICENTE_CALDERON:
@@ -260,6 +256,19 @@ public class Dinosaurio implements Runnable{
                 }
             } catch (InterruptedException ex) {
                 vida=0;
+            }
+        }
+    }
+    
+    public void lucha(Dinosaurio dinoFight){
+        if (def < (dinoFight.getAta() * 0.7) && ((def*0.9) < (dinoFight.getDef()))) {
+            restaVida(5);
+        } else {
+            if (ata > dinoFight.getAta() && ((def * 0.6) > dinoFight.getDef())) {
+                dinoFight.restaVida(3);
+            } else {
+                restaVida(2);
+                dinoFight.restaVida();
             }
         }
     }

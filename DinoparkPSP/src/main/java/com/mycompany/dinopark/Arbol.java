@@ -62,9 +62,9 @@ public class Arbol {
             if (bloquea.tryLock(1000, TimeUnit.MILLISECONDS)) {
                 if (dinos.size() <= 0) {
                     saurio.setLugarActual(Lugares.BOSQUE);
-                    entraArbol.await();
-                    entrado = true;
                     dinos.add(saurio);
+                    entrado = true;
+                    entraArbol.await(1500, TimeUnit.MILLISECONDS);
                     if (!luchando) {
                         for (Dinosaurio dino : dinos) {
                             if (dino.getTipo().equalsIgnoreCase("Herbívoro")) {
@@ -82,29 +82,20 @@ public class Arbol {
                         luchando = true;
                         TimeUnit.SECONDS.sleep(3);
                         if (!dinos.get(0).getTipo().equalsIgnoreCase(saurio.getTipo())) {
-                            if (dinos.get(0).getDef() < (saurio.getAta() * 0.7) && ((dinos.get(0).getDef() * 0.9) < (saurio.getDef()))) {
-                                dinos.get(0).restaVida(5);
-                            } else {
-                                if (dinos.get(0).getAta() > saurio.getAta() && ((dinos.get(0).getDef() * 0.6) > saurio.getDef())) {
-                                    saurio.restaVida(3);
-                                } else {
-                                    dinos.get(0).restaVida(2);
-                                    saurio.restaVida();
-                                }
-                            }
+                            dinos.get(0).lucha(saurio);
+                            luchando=true;
+                            saurio.setLugarActual(Lugares.HABITAT);
+                            entraArbol.signalAll();
+                            dinos.clear();
                         }
-                        entraArbol.signalAll();
-                        dinos.clear();
                     }
                 }
-                
+                bloquea.unlock();
             }
+            
         } catch (InterruptedException ex) {
             entraArbol.signalAll();
             Logger.getLogger(Arbol.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally{
-            bloquea.unlock();
         }
         return entrado;
     }

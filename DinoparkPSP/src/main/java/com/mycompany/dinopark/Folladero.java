@@ -15,10 +15,10 @@ import java.util.List;
  */
 public class Folladero {
     private List<SalasFolladero> salas;
-    Habitat hab;
+    private Habitat hab;
     
-    public Folladero(Habitat hab){
-        this.hab=hab;
+    public Folladero(Habitat habi){
+        this.hab=habi;
         salas=Collections.synchronizedList(new ArrayList());
         for(int i=0;i<2;i++){
             salas.add(new SalasFolladero(hab,i));

@@ -77,7 +77,7 @@ public class SalasFolladero {
         
         synchronized(dinos){
             if (dinos.size()== 1) {
-                if(dinos.get(0).getSexo()!=d.getSexo()){
+                if(!(dinos.get(0).getSexo().equalsIgnoreCase(d.getSexo()))){
                     dinos.add(d);
                     d.setLugarActual(Lugares.SALA_FOLLADERO);
                     entrado=true;
@@ -97,10 +97,8 @@ public class SalasFolladero {
         if(entrado){
             try {
                 barrier.await();//aquÃ­ se esperan
-            } catch (InterruptedException ex) {
-                Logger.getLogger(VicenteCalderon.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (BrokenBarrierException ex) {
-                
+            } catch (InterruptedException | BrokenBarrierException ex) {
+                barrier.reset();
             }
         }
         return entrado;
