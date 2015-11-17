@@ -21,7 +21,7 @@ public class Bosque {
         this.hab=habi;
         arboles=Collections.synchronizedList(new ArrayList());
         for(int i=0;i<5;i++){
-            arboles.add(new Arbol(hab));
+            arboles.add(new Arbol(hab,i));
         }
     }
     
@@ -43,6 +43,7 @@ public class Bosque {
         return arboles;
     }
 
+    
     public void setArboles(List<Arbol> arboles) {
         this.arboles = arboles;
     }

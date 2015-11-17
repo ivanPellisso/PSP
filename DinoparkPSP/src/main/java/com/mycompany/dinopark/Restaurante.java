@@ -62,7 +62,7 @@ public class Restaurante implements Runnable{
                 dino.restaHambre();
             }
         } catch (InterruptedException ex) {
-            Logger.getLogger(Restaurante.class.getName()).log(Level.SEVERE, null, ex);
+
         }
     }
     
@@ -73,7 +73,7 @@ public class Restaurante implements Runnable{
                 TimeUnit.MILLISECONDS.sleep(500);
                 mesas.put(new Object());
             } catch (InterruptedException ex) {
-                Logger.getLogger(Restaurante.class.getName()).log(Level.SEVERE, null, ex);
+                para=true;
             }
         }
     }

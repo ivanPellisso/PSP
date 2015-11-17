@@ -150,6 +150,16 @@ public class Dinosaurio implements Runnable{
     
     public void restaHambre(){
         hambre-=5;
+        if(hambre<0){
+            hambre=0;
+        }
+    }
+    
+    public void restaHambre(int n){
+        hambre-=n;
+        if(hambre<0){
+            hambre=0;
+        }
     }
     
     public void aumentaHambre(){
@@ -216,6 +226,9 @@ public class Dinosaurio implements Runnable{
     public Lugares irLugar() {
         Lugares lugar = null;
         int probability=(int)(Math.random()*70)+10;
+        if(lugar==null){
+            lugar=Lugares.BOSQUE;
+        }
         if (hambre>30&&hambre<40){
             lugar=Lugares.RESTAURANTE;
         }else{
@@ -227,9 +240,7 @@ public class Dinosaurio implements Runnable{
                 }
             }
         }
-        if(lugar==null){
-            lugar=Lugares.BOSQUE;
-        }
+        
         return lugar;//lugar;
     }
     

@@ -11,8 +11,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -24,8 +22,14 @@ public class Arbol {
     private Lock bloquea;
     private Condition entraArbol;
     private Habitat hab;
-
-    public Arbol(Habitat habi) {
+    private int num;
+    /**
+     * 
+     *  
+     */
+    
+    public Arbol(Habitat habi, int n) {
+        num=n;
         hab = habi;
         dinos = new ArrayList();
         bloquea = new ReentrantLock();
@@ -60,15 +64,15 @@ public class Arbol {
         boolean entrado = false, luchando = false;
         try {
             if (bloquea.tryLock(1000, TimeUnit.MILLISECONDS)) {
-                if (dinos.size() <= 0) {
+                if (dinos.size() == 0) {
                     saurio.setLugarActual(Lugares.BOSQUE);
                     dinos.add(saurio);
                     entrado = true;
                     entraArbol.await(1500, TimeUnit.MILLISECONDS);
                     if (!luchando) {
                         for (Dinosaurio dino : dinos) {
-                            if (dino.getTipo().equalsIgnoreCase("Herbívoro")) {
-                                dino.restaHambre();
+                            if (dino.getTipo().equalsIgnoreCase("herbívoro")) {
+                                dino.restaHambre(10);
                                 dino.aumentaAlegria();
                             } else {
                                 entraArbol.signalAll();
@@ -94,10 +98,22 @@ public class Arbol {
             }
             
         } catch (InterruptedException ex) {
-            entraArbol.signalAll();
-            Logger.getLogger(Arbol.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         return entrado;
+    }
+    
+    public String dinosEnArbol(){
+        StringBuilder cadena=new StringBuilder();
+        for(Dinosaurio dino: dinos){
+            cadena.append(dino.toString()).append("\n");
+        }
+        return cadena.toString();
+    }
+    
+    @Override
+    public String toString(){
+       return "Arbol "+num+", dinos\n"+dinosEnArbol();
     }
 
     /**

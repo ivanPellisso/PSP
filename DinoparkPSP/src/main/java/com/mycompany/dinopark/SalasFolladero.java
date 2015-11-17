@@ -97,8 +97,10 @@ public class SalasFolladero {
         if(entrado){
             try {
                 barrier.await();//aquÃ­ se esperan
-            } catch (InterruptedException | BrokenBarrierException ex) {
+            } catch (InterruptedException ex) {
                 barrier.reset();
+            } catch (BrokenBarrierException ex){
+                
             }
         }
         return entrado;

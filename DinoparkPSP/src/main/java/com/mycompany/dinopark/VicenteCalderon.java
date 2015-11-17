@@ -48,7 +48,6 @@ public class VicenteCalderon{
                     }
                 } catch (InterruptedException ex) {
                     barrier.reset();
-                    Logger.getLogger(VicenteCalderon.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
