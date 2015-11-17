@@ -119,9 +119,8 @@ public class Habitat implements Runnable{
         bang.interrupt();
         rest.cerrarRestaurante();
         estadio.resetStadium();
-        for(int i=0;i<picadero.getSalas().size();i++){
-            picadero.getSalas().get(i).getBarrier().reset();
-        }
+        picadero.resetPicadero();
+        forest.resetBosque();
     }
     
     public void bigBang(){
