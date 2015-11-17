@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -74,7 +72,8 @@ public class VicenteCalderon{
             try {
                 barrier.await();//aquí se esperan
             } catch (InterruptedException ex) {
-                Logger.getLogger(VicenteCalderon.class.getName()).log(Level.SEVERE, null, ex);
+                barrier.reset();
+                dinos.clear();
             } catch (BrokenBarrierException ex) {
                 
             }
