@@ -24,6 +24,7 @@ public class Habitat implements Runnable{
     private Restaurante rest;
     private Bosque forest;
     private Thread bang;
+    private boolean meteoLanzado;
     
     public Habitat(){
         dinosVivos=new ArrayList();
@@ -36,6 +37,7 @@ public class Habitat implements Runnable{
         bang=new Thread(this);
         bang.start();
         bang.setName("Habitat");
+        meteoLanzado=false;
     }
     
     public Habitat(ArrayList<Dinosaurio> dinosVivos,ArrayList<Dinosaurio> dinosMuertos,ExecutorService exe){
@@ -113,9 +115,11 @@ public class Habitat implements Runnable{
     }
     
     public void addDino(Dinosaurio saurio){
-        Thread dino=new Thread(saurio);
-        dinosVivos.add(saurio);
-        dino.start();
+        if(!meteoLanzado){
+            synchronized(dinosVivos){
+                dinosVivos.add(saurio);
+            }
+        }
     }
     
     public void lanzaMeteorito(){
@@ -124,6 +128,7 @@ public class Habitat implements Runnable{
         estadio.resetStadium();
         picadero.resetPicadero();
         forest.resetBosque();
+        meteoLanzado=true;
     }
     
     public void bigBang(){
@@ -153,7 +158,6 @@ public class Habitat implements Runnable{
     public void entrarBosque(Dinosaurio d) {
         forest.entrar(d);
     }
-    
 
     @Override
     public void run() {
@@ -178,10 +182,13 @@ public class Habitat implements Runnable{
                 para=true;
             }
         }
+        estadio.resetStadium();
+        rest.cerrarRestaurante();
+        forest.resetBosque();
         for(Dinosaurio dino: dinosVivos){
             dino.muereDino();
         }
-        
+        //dinos=null;
         exe.shutdown();
     }
 
