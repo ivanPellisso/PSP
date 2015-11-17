@@ -27,6 +27,7 @@ public class Dinosaurio implements Runnable{
     private boolean para;
     private Habitat hab;
     private Lugares lug;
+    private Thread d;
     
     public Dinosaurio(String nombre, Habitat hab){
         this.hab=hab;
@@ -36,7 +37,19 @@ public class Dinosaurio implements Runnable{
         edad=0;
         char [] sexos={'M','H'};
         sexo=sexos[(int)(Math.random()*2)];
+        String [] tipos={"Herbívoro","Carnívoro"};
+        tipo=tipos[(int)(Math.random()*2)];
+        if(tipo.equalsIgnoreCase("herbívoro")){
+            ata=(int)(Math.random()*30)+20;
+            def=(int)(Math.random()*35)+35;
+        }else{
+            ata=(int)(Math.random()*40)+30;
+            def=(int)(Math.random()*25)+25;
+        }
         this.nombre=nombre;
+        d=new Thread();
+        d.start();
+        d.setName("Dino"+nombre);
     }
     
     public Dinosaurio(String n1, String n2, Habitat hab){
@@ -165,7 +178,7 @@ public class Dinosaurio implements Runnable{
     
     public void aumentaAlegria(int n){
         alegria+=n;
-        if(alegria==30){
+        if(alegria==20){
             alegria=0;
             vida++;
         }
@@ -173,6 +186,7 @@ public class Dinosaurio implements Runnable{
     
     public void muereDino(){
         vida=0;
+        d.interrupt();
     }
     
     public String getNombre() {
@@ -197,27 +211,26 @@ public class Dinosaurio implements Runnable{
 
     @Override
     public String toString() {
-        return "Dinosaurio "+nombre+"{" + "vida= " + vida + ", hambre= "+ hambre+", alegría= "+alegria+", lugar= "+lug+", sexo= "+sexo+", edad= "+edad;
+        return "Dinosaurio "+nombre+"{" + "vida= " + vida + ", hambre= "+ hambre+", alegría= "+alegria+
+                ", lugar= "+lug+", sexo= "+sexo+", edad= "+edad+", tipo="+tipo+", ataque="+ata+" defensa="+def;
     }
     
     public Lugares irLugar() {
         Lugares lugar = null;
-        
-        if (alegria>hambre){
-            lugar=Lugares.VICENTE_CALDERON;
+        int probability=(int)(Math.random()*70)+10;
+        if (hambre>18){
+            lugar=Lugares.RESTAURANTE;
+            
         }else{
-            if(alegria<hambre&&hambre>15){
-                lugar=Lugares.RESTAURANTE;
+            if(edad>8&&probability<35){
+                lugar=Lugares.SALA_FOLLADERO;
+                
             }else{
-                if(edad>8){
-                    lugar=Lugares.SALA_FOLLADERO;
+                if(alegria<20&&probability>=35){
+                    lugar=Lugares.VICENTE_CALDERON;
                 }
             }
         }
-        
-//        if (hambre > 15) {
-//            lugar = Lugares.RESTAURANTE;
-//        }
         if(lugar==null){
             lugar=Lugares.BOSQUE;
         }
@@ -242,7 +255,7 @@ public class Dinosaurio implements Runnable{
                         hab.entrarFolladero(this);
                         break;
                     case BOSQUE:
-                        //hab.entrarBosque(this);
+                        hab.entrarBosque(this);
                         break;
                 }
             } catch (InterruptedException ex) {

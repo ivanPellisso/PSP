@@ -121,5 +121,6 @@ public class SalasFolladero {
     
     public void resetSala(){
         barrier.reset();
+        dinos.clear();
     }
 }

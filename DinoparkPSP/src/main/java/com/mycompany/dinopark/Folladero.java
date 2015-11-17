@@ -53,5 +53,6 @@ public class Folladero {
         for(int i=0;i<salas.size();i++){
             salas.get(i).resetSala();
         }
+        salas.clear();
     }
 }

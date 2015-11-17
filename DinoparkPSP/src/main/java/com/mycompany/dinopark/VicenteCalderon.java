@@ -84,6 +84,7 @@ public class VicenteCalderon{
     
     public void resetStadium(){
         barrier.reset();
+        dinos.clear();
     }
     
     public List<Dinosaurio> getDinos() {
