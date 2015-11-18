@@ -32,7 +32,7 @@ public class Arbol {
         num=n;
         hab = habi;
         dinos = new ArrayList();
-        bloquea = new ReentrantLock();
+        bloquea = new ReentrantLock(true);//si pasas true al ReentrantLock, hace que el que más tiempo lleve esperando, coja el lock
         entraArbol = bloquea.newCondition();
     }
 

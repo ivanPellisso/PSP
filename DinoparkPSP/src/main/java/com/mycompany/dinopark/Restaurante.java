@@ -7,8 +7,6 @@ package com.mycompany.dinopark;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -57,7 +55,7 @@ public class Restaurante implements Runnable{
     
     public void entrar(Dinosaurio dino){
         try {
-            if(mesas.poll(500, TimeUnit.MILLISECONDS)!=null){
+            if(mesas.poll(500, TimeUnit.MILLISECONDS)!=null){//si espera 2 segundos y no coge algo, devuelve null
                 dino.setLugarActual(Lugares.RESTAURANTE);
                 dino.restaHambre();
             }
@@ -71,7 +69,7 @@ public class Restaurante implements Runnable{
         while(!para){
             try {
                 TimeUnit.MILLISECONDS.sleep(500);
-                mesas.put(new Object());
+                mesas.put(new Object());//pone platos
             } catch (InterruptedException ex) {
                 para=true;
             }
