@@ -89,11 +89,6 @@ public class Ninyo implements Runnable{
         }while(!ganado);
     }
     
-    private void anularPartida(){
-        pista.cerrarPista();
-        child.interrupt();
-    }
-    
     @Override
     public void run() {
         pista.entrarPista(this);

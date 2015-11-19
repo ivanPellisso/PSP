@@ -5,8 +5,6 @@
  */
 package com.mycompany.carrerachapas;
 
-import java.util.Scanner;
-
 /**
  *
  * @author IvPR
