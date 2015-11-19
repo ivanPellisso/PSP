@@ -17,7 +17,6 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Scanner lector=new Scanner(System.in);
         Pista p=new Pista();
         Ninyo n1=new Ninyo(1,p);
         Ninyo n2=new Ninyo(2,p);

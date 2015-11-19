@@ -43,7 +43,6 @@ public class Ninyo implements Runnable{
     // return ivan.peinarBarba();
     //}
     
-    
     public Condition getMyTurn() {
         return myTurn;
     }
@@ -89,11 +88,6 @@ public class Ninyo implements Runnable{
             }
         }while(!ganado);
     }
-    
-//    public void setConditions(Condition currentTurn, Condition yourTurn){
-//        myTurn=currentTurn;
-//        nextTurn=yourTurn;
-//    }
     
     private void anularPartida(){
         pista.cerrarPista();
