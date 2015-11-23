@@ -19,8 +19,9 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Carrera {
     private Lock lock;
+    private Lock panuelo;
     private CyclicBarrier barrier;
-    private CyclicBarrier ninyosCarrera;
+    private CyclicBarrier ninyosCarrera;//SUSTITUIR POR LOCK
     private CountDownLatch arbitroLevanta;
     private Condition referee;
     private ArrayList<Condition> dorsales;
@@ -101,7 +102,7 @@ public class Carrera {
         return cadena.toString();
     }
 
-    public void jugadoresCorriendo(Ninyo n){
+    public void addChild(Ninyo n){
         jugadores.add(n);//Gestión del niño que gana 
         if(jugadores.size()==2){
             //Aquí se quitan del array a los niños que hayan perdido la carrera

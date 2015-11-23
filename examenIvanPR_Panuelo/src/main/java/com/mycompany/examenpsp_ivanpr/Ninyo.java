@@ -104,7 +104,7 @@ public class Ninyo implements Runnable{
             recorrido+=v;
             }
             synchronized(race.getJugadores()){
-                race.jugadoresCorriendo(this);
+                race.addChild(this);
             }
             if(race.getJugadores().size()==2){
                 race.getLock().lock();
