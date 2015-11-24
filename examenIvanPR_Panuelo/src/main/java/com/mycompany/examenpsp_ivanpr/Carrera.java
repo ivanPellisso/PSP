@@ -112,8 +112,7 @@ public class Carrera {
                     partiesT2.remove(n);
                 }
             }
-            //System.out.println("Ganador de la carrera: Niño"+jugadores.get(0).getNombre());
-            ganador.append("Ganador de la carrera: Niño ").append(jugadores.get(0).getNombre()).append("\n");
+            
             ninyosCarrera.reset();
             jugadores.clear();
         }

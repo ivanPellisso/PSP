@@ -173,6 +173,9 @@ public class Ninyo implements Runnable{
 
     public void desintegrar(){
         ganado=true;
+        race.getLock().lock();
+        meToca.signalAll();
+        race.getLock().unlock();
         child.interrupt();
     }
     

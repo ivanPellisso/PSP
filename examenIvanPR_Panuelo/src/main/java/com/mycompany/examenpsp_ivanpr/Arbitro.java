@@ -19,9 +19,11 @@ public class Arbitro implements Runnable{
     private int random;
     private Thread ref;
     private Carrera race;
+    private boolean salir;
     
     public Arbitro(Carrera c, Condition juega, ArrayList<Condition> numPlayers, ArrayList<Integer> numerosJ){
         play=juega;
+        salir=false;
         dorsales=numPlayers;
         race=c;
         numeros=new ArrayList();
@@ -68,7 +70,7 @@ public class Arbitro implements Runnable{
     
     @Override
     public void run() {
-        while(numeros.size()<5){
+        while(!salir&&numeros.size()<5){
             race.getLock().lock();
             try {
                 play.await();
@@ -82,6 +84,7 @@ public class Arbitro implements Runnable{
                 System.out.println("SALEN JUGADORES CON NÚMERO "+num);
             } catch (InterruptedException ex) {
                 dorsales.clear();
+                salir=true;
                 ref.interrupt();
             }finally{
                 race.getLock().unlock();
