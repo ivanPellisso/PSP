@@ -85,7 +85,6 @@ public class Arbitro implements Runnable{
             } catch (InterruptedException ex) {
                 dorsales.clear();
                 salir=true;
-                ref.interrupt();
             }finally{
                 race.getLock().unlock();
             }
