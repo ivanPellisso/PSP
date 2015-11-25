@@ -161,7 +161,7 @@ public class Ninyo implements Runnable{
                     TimeUnit.MILLISECONDS.sleep(1500);
                     race.getReferee().signalAll();
                 }
-                meToca.await();//SE QUEDAN AQUÍ ESPERANDO CUANDO LE DOY A MATAR
+                meToca.await();
                 race.getLock().unlock();
                 corre();
             } catch (InterruptedException ex) {
