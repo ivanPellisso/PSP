@@ -19,7 +19,6 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Carrera {
     private Lock lock;
-    private Lock panuelo;
     private CyclicBarrier barrier;
     private CyclicBarrier ninyosCarrera;//SUSTITUIR POR LOCK
     private CountDownLatch arbitroLevanta;
@@ -31,6 +30,9 @@ public class Carrera {
     private ArrayList<Ninyo> jugadores;
     private Arbitro arbi;
     private StringBuilder ganador;
+    /**
+     * 
+     */
     
     public Carrera(){
         ganador=new StringBuilder();
