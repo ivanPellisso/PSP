@@ -24,7 +24,6 @@ public class Ninyo implements Runnable{
     private Thread child;
     private Condition meToca;
     private int velocidad;
-    private Lugares lug;
     private Carrera race;
     private boolean primero;
     private int equipo;
@@ -181,12 +180,7 @@ public class Ninyo implements Runnable{
     
     @Override
     public String toString() {
-        return "Niño "+ nombre + ", lugar=" + lug +
-                ", velocidad=" + velocidad + ", dorsal="+dorsal+"\n";
-    }
-
-    void setLugarActual(Lugares lugares) {
-        lug=lugares;
+        return "Niño "+ nombre + ", velocidad=" + velocidad + ", dorsal="+dorsal+"\n";
     }
     
 }

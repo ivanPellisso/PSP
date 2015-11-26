@@ -20,7 +20,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Carrera {
     private Lock lock;
     private CyclicBarrier barrier;
-    private CyclicBarrier ninyosCarrera;//SUSTITUIR POR LOCK
+    private CyclicBarrier ninyosCarrera;
     private CountDownLatch arbitroLevanta;
     private Condition referee;
     private ArrayList<Condition> dorsales;
